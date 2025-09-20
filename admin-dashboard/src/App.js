@@ -1,4 +1,4 @@
-import {Route, Routes } from "react-router-dom";
+import {Navigate, Route, Routes } from "react-router-dom";
 
 
 
@@ -19,29 +19,26 @@ const SharedLayout = lazy(() => import("./components/SharedLayout/SharedLayout")
 function App() {
   return (
 
-<div>
-  <Suspense fallback={<div>Loading...</div>}>
-      <Routes>
+    <div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          {/* Login окремо */}
           <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/"
-            element={
-             
-             <SharedLayout />
-             
-            }
-          >
 
+          {/* Усі інші сторінки під SharedLayout */}
+          <Route path="/" element={<SharedLayout />}>
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="orders" element={<AllOrdersPage />} />
             <Route path="products" element={<AllProductsPage />} />
             <Route path="suppliers" element={<AllSuppliersPage />} />
             <Route path="customers" element={<CustomersDataPage />} />
 
+            {/* якщо зайшов на / → редірект на /login */}
+            <Route index element={<Navigate to="/login" replace />} />
           </Route>
         </Routes>
-   </Suspense>       
-</div>
+      </Suspense>
+    </div>
   );
 }
 
