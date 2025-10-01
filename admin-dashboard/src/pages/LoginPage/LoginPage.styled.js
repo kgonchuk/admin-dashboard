@@ -112,12 +112,13 @@ position:absolute;
 top:666px;
 left:117px;
 
-@media screen and (min-width: 1440px) {
-top:563px;
-left:1161px;
-  }
   @media screen and (min-width: ${breakpoints.medium}) {
 top:761px;
 left:502px;
         }
+
+@media screen and (min-width: ${breakpoints.large}) {
+top:600px;
+left:1200px;
+  }
 `

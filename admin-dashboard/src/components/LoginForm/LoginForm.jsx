@@ -14,19 +14,16 @@ const schema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
   password: Yup.string().min(6, 'Too Short!').max(20, 'Too Long!').required('Required')
 });
-const handleSubmit = (values) => {
-  console.log(values);
-};
+
 
 
  
 const LoginForm = () => {
    const navigate = useNavigate();
-const [showPassword, setShowPassword]=useState(false)
+  const [isVisiblePassword, setIsVisiblePassword] = useState(false);
 
-  const togglePasswordShown = () => {
-    setShowPassword(prevState => !prevState);
-  };
+
+
 
 
  const handleLogin=()=>{
@@ -53,16 +50,19 @@ const [showPassword, setShowPassword]=useState(false)
           <Input name="password"placeholder="Password" />
           {errors.password && touched.password ? <div>{errors.password}</div> : null}
            
-           <EyeToggleBtn type="button"  onClick={() => setShowPassword(!showPassword)}>
-              {showPassword ? (
+           <EyeToggleBtn type="button"   onClick={() => setIsVisiblePassword(!isVisiblePassword)}>
+              
+               {/* {isVisiblePassword ? (
                 <svg width={18} height={18}>
-                  <use href={`${sprite}#icon-eye-on`}></use>
+                  <use href={`${sprite}#icon-eye`}></use>
                 </svg>
               ) : (
                 <svg width={18} height={18}>
-                  <use href={`${sprite}#icon-eye-of`}></use>
+                  <use href={`${sprite}#icon-eye-off`}></use>
                 </svg>
               )}
+          */}
+          
               </EyeToggleBtn>
         </div>
         </InputBlock>

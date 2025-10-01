@@ -1,6 +1,12 @@
+
+
+
 const AllOrdersPage = () => {
   return (
-    <div>AllOrdersPage</div>
+    <div>    AllOrdersPage</div>
+  
+
+ 
   )
 }
 
