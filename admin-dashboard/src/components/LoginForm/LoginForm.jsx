@@ -1,76 +1,91 @@
-import { Input, InputBlock, LoginButton, } from "./ LoginForm.styled";
-import {Field, Form, Formik } from "formik";
-import * as Yup from 'yup';
-import { EyeToggleBtn } from "../../components/LoginForm/ LoginForm.styled";
-import { useState } from "react";
-import sprite from "../../assets/sprite-2.svg";
-import { Navigate, useNavigate } from "react-router-dom";
 
-const initialValues = {
-  email: '',
-  password: ''
-};
-const schema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Required'),
-  password: Yup.string().min(6, 'Too Short!').max(20, 'Too Long!').required('Required')
+
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, Navigate } from "react-router-dom";
+import { useState } from "react";
+import { logIn } from "../../redux/auth/authOperation";
+import AuthInput from "../AuthInput/AuthInput";
+import { LoginButton, EyeToggleBtn, InputBlock } from "./ LoginForm.styled";
+
+const schema = Yup.object({
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password too short")
+    .max(20, "Password too long")
+    .required("Password is required"),
 });
 
-
-
- 
 const LoginForm = () => {
-   const navigate = useNavigate();
-  const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const { accessToken, loading, error } = useSelector((state) => state.auth || {});
 
+  // 🔐 Якщо користувач уже авторизований — редірект
+  if (accessToken) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
+  const handleSubmit = async (values, { setSubmitting }) => {
+    console.log("Submitting form with values:", values);
+    try {
+      const result = await dispatch(logIn(values));
+      console.log("Login result:", result);
+      if (logIn.fulfilled.match(result)) {
+        navigate("/dashboard");
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
+  return (
+    <Formik
+      initialValues={{ email: "", password: "" }}
+      validationSchema={schema}
+      onSubmit={handleSubmit}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <InputBlock>
+            <AuthInput
+              label="Email"
+              name="email"
+              type="email"
+              placeholder="Enter your email"
+            />
 
-
- const handleLogin=()=>{
-  navigate('/dashboard');
- }
-
-    return (
-
-
-    <Formik 
-
-    initialValues={initialValues} 
-    validationSchema={schema}  
-    onSubmit={handleLogin} >
-    {({ errors, touched }) => (
-
-      <Form>
-        <InputBlock>
-        <div >
-          <Input name="email" type="email" placeholder="Email address" />
-          {errors.email && touched.email ? <div>{errors.email}</div> : null}
-        </div>
-        <div >
-          <Input name="password"placeholder="Password" />
-          {errors.password && touched.password ? <div>{errors.password}</div> : null}
-           
-           <EyeToggleBtn type="button"   onClick={() => setIsVisiblePassword(!isVisiblePassword)}>
-              
-               {/* {isVisiblePassword ? (
-                <svg width={18} height={18}>
-                  <use href={`${sprite}#icon-eye`}></use>
-                </svg>
-              ) : (
-                <svg width={18} height={18}>
-                  <use href={`${sprite}#icon-eye-off`}></use>
-                </svg>
-              )}
-          */}
-          
+            <div style={{ position: "relative" }}>
+              <AuthInput
+                label="Password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+              />
+              <EyeToggleBtn
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "🙈" : "👁"}
               </EyeToggleBtn>
-        </div>
-        </InputBlock>
-        <LoginButton type="submit"  >Login</LoginButton>
-      </Form>
-  
-    )}
-    </Formik>
+            </div>
 
-);};
+            {error && (
+              <div style={{ color: "red", marginTop: "10px", textAlign: "center" }}>
+                {error}
+              </div>
+            )}
+
+            <LoginButton type="submit" disabled={isSubmitting || loading}>
+              {loading ? "Loading..." : "Login"}
+            </LoginButton>
+          </InputBlock>
+        </Form>
+      )}
+    </Formik>
+  );
+};
+
 export default LoginForm;

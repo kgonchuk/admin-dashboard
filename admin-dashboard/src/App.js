@@ -1,9 +1,7 @@
 import {Navigate, Route, Routes } from "react-router-dom";
-
-
-
-
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUser, refreshAccessToken } from "./redux/auth/authOperation";
 
 
 
@@ -17,6 +15,26 @@ const SharedLayout = lazy(() => import("./components/SharedLayout/SharedLayout")
 
 
 function App() {
+  const dispatch = useDispatch();
+  const auth= useSelector(state => state.auth);
+  const accessToken=auth?.accessToken;
+
+  useEffect(() => {
+    const initAuth = async () => { 
+      if (accessToken) {
+        try {
+          await dispatch(getCurrentUser()).unwrap();
+        
+        } catch (error) {
+          console.error("Error during token verification:", error);
+          await dispatch(refreshAccessToken());
+          await dispatch(getCurrentUser());
+        
+        }
+    
+    }}; initAuth();
+   
+  }, [accessToken, dispatch]);
   return (
 
     <div>
