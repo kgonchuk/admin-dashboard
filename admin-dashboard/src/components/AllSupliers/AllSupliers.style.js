@@ -1,0 +1,202 @@
+import styled from "styled-components";
+import color from '../../global/globalColors'
+import { breakpoints } from "../../global/breakPoints";
+
+export const SupliersWrap= styled.div`
+  margin-top: 20px;
+  @media screen and (min-width: ${breakpoints.medium})  {
+margin-bottom:20px;
+}
+@media screen and (min-width: ${breakpoints.large})  {
+}
+
+`;
+export const AddButton=styled.button`
+font-size:12px;
+font-weight:500;
+padding:13px 30px;
+background:transparent;
+border-radius:60px;
+border:1px solid rgba(89, 177, 122, 0.5);
+margin-bottom:20px;
+width:177px;
+margin-top:16px;
+  @media screen and (min-width: ${breakpoints.medium})  {
+    margin-top:0;
+  margin-bottom:0;
+}
+
+`;
+
+export const SupliersCap=styled.caption`
+ padding: 14px;
+  border-radius: 8px 8px 0 0;
+  background-color: #e7f1ed;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.25;
+  color: #1d1e21;
+  text-align: left;
+  @media screen and (min-width: ${breakpoints.medium})  {
+   font-size: 18px;
+  line-height: 1.33;
+padding: 20px;
+    }
+
+`;
+
+export const SupliersleHeader = styled.thead`
+  color: rgba(29, 30, 33, 0.4);
+  font-weight: 500;
+  font-size: 14px;
+`;
+
+export const SupliersRow = styled.tr``;
+export const SupliersHead = styled.th`
+  padding: 14px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.17;
+  color: rgba(29, 30, 33, 0.4);
+  text-align: left;
+  border-bottom:1px solid #ddd;
+   border-left:1px solid #ddd;
+   &:last-child {
+     border-right: none;
+  }
+     &:first-child {
+     border-left: none;
+  }
+      @media screen and (min-width: ${breakpoints.medium})  {
+   font-size: 14px;
+  line-height: 1.28;
+  padding: 20px;
+
+    }
+`;
+export const SupliersHeadName = styled.th`
+  padding: 14px 0;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.17;
+  color: rgba(29, 30, 33, 0.4);
+  text-align: left;
+  border-bottom:1px solid #ddd;
+   border-left:1px solid #ddd;
+   &:last-child {
+     border-right: none;
+  }
+     &:first-child {
+     border-left: none;
+  }
+      @media screen and (min-width: ${breakpoints.medium})  {
+   font-size: 14px;
+  line-height: 1.28;
+  padding: 20px 0;
+
+    }
+`;
+
+  export const SupliersTable=styled.table`
+width:680px;
+  padding: 0 14px;
+  border: 1px solid rgba(29, 30, 33, 0.1);
+  border-radius: 0 0 8px 8px;
+  background-color: #ffffff;
+  border-spacing: 0;
+  border-top: 0;
+  @media screen and (min-width: ${breakpoints.medium})  {
+  padding: 0 20px;
+  width: 960px;
+    }
+
+   @media screen and (min-width: ${breakpoints.large})  {
+width: 1280px;
+
+  
+    }
+
+`;
+export const SupliersBody = styled.tbody``;
+
+export const SupliersTd=styled.td`
+white-space:nowrap;
+background: ${color.white}; 
+padding: 14px 10px 14px 0;
+font-size: 12px;
+line-height:1.16;
+color: #111827;
+border-left:1px solid #e5e7eb;
+border-bottom:1px solid #e5e7eb;
+
+&:last-child {
+     border-right: none;
+  }
+     &:first-child {
+     border-left: none;
+  }
+@media screen and (min-width: ${breakpoints.medium})  {
+font-size: 16px;
+line-height:1.12;
+padding: 20px;
+    }
+`;
+
+
+export const SupliersCell=styled.td`
+ padding: 30px 14px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  font-size: 12px;
+font-weight:500;
+  span {
+    display: flex;
+    gap: 8px;
+  }
+
+  &:last-child {
+    border-right: none;
+  }
+
+  span {
+    display: inline-block;
+    padding: 4px 13.5px;
+    border-radius: 40px;
+    background-color: ${({ type }) => {
+      switch (type) {
+        case "Active":
+          return "rgba(89, 177, 122, 0.1)";
+        case "Deactive":
+          return "rgba(232, 80, 80, 0.1)";
+        default:
+          return "rgba(0, 0, 0, 0.05)";
+      }
+    }};
+
+    color: ${({ type }) => {
+      switch (type) {
+        case "Active":
+          return "var(--main-color)";
+        case "Deactive":
+          return "var(--cancel-color)";
+        default:
+          return "inherit";
+      }
+    }};
+  }
+  @media screen and (min-width: 768px) {
+    font-size: 16px;
+  }
+
+`;
+export const FilterWrap=styled.div`
+display:block;
+ @media screen and (min-width: 768px) {
+   display:flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom:20px;
+
+  }
+`;

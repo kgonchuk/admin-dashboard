@@ -22,7 +22,8 @@ export const RecentCustomers = () => {
     <CustomerImgBlock>
       <CustomImg src={custom1} alt="custom" />
       Alex BBBB
-      </CustomerImgBlock></TableTd>
+      </CustomerImgBlock>
+      </TableTd>
   <TableTdEmail>alexshatov@gmail.com</TableTdEmail>
   <TableCount>2,890.66</TableCount>
 </TableRow> 

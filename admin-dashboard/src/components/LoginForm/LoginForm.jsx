@@ -53,6 +53,7 @@ const LoginForm = () => {
             <AuthInput
               label="Email"
               name="email"
+               id="email"
               type="email"
               placeholder="Enter your email"
             />
@@ -60,6 +61,7 @@ const LoginForm = () => {
             <div style={{ position: "relative" }}>
               <AuthInput
                 label="Password"
+                 id="Password"
                 name="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"

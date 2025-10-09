@@ -1,6 +1,15 @@
+import { AllSupliers } from "../../components/AllSupliers/AllSupliers";
+
+
+import { SuppliersPageContainer } from "./AllSuppliersPage.styled";
+
 const AllsuppliersPage = () => {
-  return (
-    <div>AllSuppliersPage</div>
-  )
+  return( 
+    
+    <SuppliersPageContainer>
+   
+    <AllSupliers/>
+  </SuppliersPageContainer>)
+
 }       
 export default AllsuppliersPage;

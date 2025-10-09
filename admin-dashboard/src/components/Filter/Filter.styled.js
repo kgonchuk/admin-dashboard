@@ -1,11 +1,17 @@
 import styled from "styled-components";
 import color from "../../global/globalColors";
+import { breakpoints } from "../../global/breakPoints";
 
 export const FilterContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-top:40px;
+    @media screen and (min-width: ${breakpoints.medium})  {
+      margin-top:0;
+      
+
+  }
 `;
 export const FilterInput = styled.input`
 border-radius:60px;

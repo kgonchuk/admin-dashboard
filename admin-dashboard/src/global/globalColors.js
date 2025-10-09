@@ -6,6 +6,7 @@ const color = {
   greenSecondary: "#3F945F",
   redPrimary: "#E85050",  
   greenLight: "#59B17A 10%",
+  greenBorder:"rgba(89, 177, 122, 0.5)",
   redLight: "#E85050 10%",
   greenMint: "#E7F1ED",
   greyLight: "#DCDDDF",
