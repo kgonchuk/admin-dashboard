@@ -1,27 +1,67 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {selectSupplierError, selectSupplierLoading, selectSuppliers } from "../../redux/supplier/supplierSelector";
-import { AddButton, FilterWrap, SupliersBody, SupliersCap, SupliersCell, SupliersHead, SupliersleHeader, SupliersRow, SupliersTable, SupliersWrap } from "./AllSupliers.style"
+import { AddButton, EditBtn, EditIcon, FilterWrap, SupliersBody, SupliersCap, SupliersCell, SupliersHead, SupliersleHeader, SupliersRow, SupliersTable, SupliersWrap, TableWrap } from "./AllSupliers.style"
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSuppliers } from "../../redux/supplier/supplierOperation";
 import { Filter } from "../Filter/Filter";
-import { Pagination } from "../Pagination/Pagination";
+import { Paginator } from "../Paginator/Paginator";
+
+
 export const AllSupliers =()=>{
 const dispatch=useDispatch();
 const suppliers = useSelector(selectSuppliers);
 const loading = useSelector(selectSupplierLoading);
 const error = useSelector(selectSupplierError);
+ const [page, setPage] = useState(1);
+ const itemPerPage=5;
+
+ const [searchTerm, setSearchTerm] = useState('');
 console.log("Redux state:", useSelector((state)=>state))
+
+const filteredSuppliers = useMemo(() => {
+    if (!searchTerm) {
+        return suppliers;
+    }
+    return suppliers.filter(supplier =>
+        supplier.name.toLowerCase().includes(searchTerm) 
+        // Або додайте інші поля: || supplier.company.toLowerCase().includes(searchTerm)
+    );
+}, [searchTerm, suppliers]); // Залежність: оновлює
+
+const totalItems = filteredSuppliers.length; 
+
+
+const startIndex = (page - 1) * itemPerPage;
+const endIndex = startIndex + itemPerPage;
+
+const visibleSuppliers = filteredSuppliers.slice(startIndex, endIndex);
 
 useEffect(()=>{
     dispatch(fetchSuppliers())
 },[dispatch])
 console.log("Supplers from Redux:", suppliers)
+
+const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value.toLowerCase());
+        setPage(1); 
+    };
+
+
     return(
     <SupliersWrap>
         <FilterWrap>
-           <Filter placeholder="User name"/>
+           <Filter 
+placeholder="User name" 
+totalItems={totalItems} 
+itemsPerPage={itemPerPage}
+currentPage={page}
+onPageChange={setPage}
+  value={searchTerm} 
+    onChange={handleSearchChange}
+/>
            <AddButton>Add a new suppliers</AddButton>
         </FilterWrap>
+        <TableWrap>
         <SupliersTable>
             <SupliersCap>All suppliers</SupliersCap>
             <SupliersleHeader>
@@ -36,7 +76,7 @@ console.log("Supplers from Redux:", suppliers)
             </SupliersRow>
             </SupliersleHeader>
             <SupliersBody>
-                {suppliers.map((supplier)=>(  
+                {visibleSuppliers.map((supplier)=>(  
                     <SupliersRow key={supplier._id}>
                     <SupliersCell>{supplier.name}</SupliersCell>
                     <SupliersCell>{supplier.adress}</SupliersCell>
@@ -44,11 +84,19 @@ console.log("Supplers from Redux:", suppliers)
                     <SupliersCell>{supplier.date}</SupliersCell>
                      <SupliersCell>{supplier.amount}</SupliersCell>
                     <SupliersCell>{supplier.status}</SupliersCell>
-                     <SupliersCell></SupliersCell>
+                     <SupliersCell><EditBtn><EditIcon>
+                        <use/>
+                        </EditIcon></EditBtn></SupliersCell>
                 </SupliersRow>))}
-              
             </SupliersBody>
         </SupliersTable>
-
+        </TableWrap>
+<Paginator
+totalItems={totalItems}
+itemsPerPage={itemPerPage}
+currentPage={page}
+onPageChange={setPage}
+/>
     </SupliersWrap>)
 }
+

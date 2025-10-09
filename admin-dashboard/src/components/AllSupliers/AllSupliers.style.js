@@ -2,6 +2,7 @@ import styled from "styled-components";
 import color from '../../global/globalColors'
 import { breakpoints } from "../../global/breakPoints";
 
+
 export const SupliersWrap= styled.div`
   margin-top: 20px;
   @media screen and (min-width: ${breakpoints.medium})  {
@@ -105,6 +106,10 @@ width:680px;
   background-color: #ffffff;
   border-spacing: 0;
   border-top: 0;
+
+
+  width: 100%; 
+  border-collapse: collapse;
   @media screen and (min-width: ${breakpoints.medium})  {
   padding: 0 20px;
   width: 960px;
@@ -200,3 +205,11 @@ display:block;
 
   }
 `;
+export const TableWrap=styled.div`
+  max-width: 100%;
+   overflow-x: auto; 
+    -webkit-overflow-scrolling: touch; 
+`;
+
+export const EditBtn=styled.button``;
+export const EditIcon=styled.svg``;

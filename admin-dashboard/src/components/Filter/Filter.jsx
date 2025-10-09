@@ -2,7 +2,7 @@ import { FilterButton, FilterContainer, FilterIcon, FilterInput } from "./Filter
 import sprite from "../../assets/sprite-2.svg";
 
 
-export const Filter = ({placeholder}) => {
+export const Filter = ({placeholder, value, onChange}) => {
   
   return (
   <FilterContainer>
@@ -10,7 +10,8 @@ export const Filter = ({placeholder}) => {
       type="text"
   id="name"
   name="name"
-      
+       value={value}
+        onChange={onChange}
         placeholder={placeholder}/>
     <FilterButton>  
       <FilterIcon width={18} height={18} viewBox="0 0 32 32">
