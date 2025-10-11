@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/47.bfe62e12.chunk.js","mappings":"0JAAA,MAMA,EANsBA,KAElBC,EAAAA,EAAAA,KAAA,OAAAC,SAAK,iB","sources":["pages/AllOrdersPage/AllOrdersPage.jsx"],"sourcesContent":["const AllOrdersPage = () => {\n  return (\n    <div>AllOrdersPage</div>\n  )\n}\n\nexport default AllOrdersPage;   "],"names":["AllOrdersPage","_jsx","children"],"sourceRoot":""}

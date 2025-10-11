@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkadmin_dashboard=self.webpackChunkadmin_dashboard||[]).push([[428],{3428:(a,d,s)=>{s.r(d),s.d(d,{default:()=>r});var e=s(579);const r=()=>(0,e.jsx)("div",{children:"    AllOrdersPage"})}}]);
+//# sourceMappingURL=428.127d6203.chunk.js.map
