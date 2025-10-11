@@ -182,9 +182,9 @@ font-weight:500;
     color: ${({ type }) => {
       switch (type) {
         case "Active":
-          return "var(--main-color)";
+          return "rgba(89, 177, 122, 1)";
         case "Deactive":
-          return "var(--cancel-color)";
+          return "rgba(232, 80, 80, 1)";
         default:
           return "inherit";
       }
@@ -211,5 +211,31 @@ export const TableWrap=styled.div`
     -webkit-overflow-scrolling: touch; 
 `;
 
-export const EditBtn=styled.button``;
-export const EditIcon=styled.svg``;
+export const EditBtn=styled.button`
+ padding: 8px 17px;
+  background-color: transparent;
+  border-radius:30px;
+  border: none;
+  border: 1px solid ${color.greenPrimary};
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  width: 82px;
+  color: rgba(89, 177, 122, 1);
+  @media (min-width: 768px) {
+  
+
+
+`;
+export const EditIcon=styled.svg`
+  width: 14px;
+  height: 14px;
+  background-color:transparent;
+  fill: transparent;
+stroke:${color.greenPrimary};
+
+`;

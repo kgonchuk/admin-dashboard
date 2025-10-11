@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSuppliers } from "../../redux/supplier/supplierOperation";
 import { Filter } from "../Filter/Filter";
 import { Paginator } from "../Paginator/Paginator";
+import sprite from '../../assets/sprite-2.svg'
+import { AddNewSuppliers } from "../AddNewSuppliers/AddNewSuppliers";
 
 
 export const AllSupliers =()=>{
@@ -15,8 +17,24 @@ const error = useSelector(selectSupplierError);
  const [page, setPage] = useState(1);
  const itemPerPage=5;
 
+ const [openModal, setOpenModal] = useState(false);
+
  const [searchTerm, setSearchTerm] = useState('');
 console.log("Redux state:", useSelector((state)=>state))
+
+
+ const handlModalOpen = () => {
+    setOpenModal(true);
+  };
+  const hadleModalClose = () => {
+    setOpenModal(false);
+  };
+  const handleModalCloseEsc = (e) => {
+    if (e.code === "Escape") {
+      hadleModalClose();
+    }
+  };
+  window.addEventListener("keydown", handleModalCloseEsc);
 
 const filteredSuppliers = useMemo(() => {
     if (!searchTerm) {
@@ -83,10 +101,15 @@ onPageChange={setPage}
                      <SupliersCell>{supplier.company}</SupliersCell>
                     <SupliersCell>{supplier.date}</SupliersCell>
                      <SupliersCell>{supplier.amount}</SupliersCell>
-                    <SupliersCell>{supplier.status}</SupliersCell>
-                     <SupliersCell><EditBtn><EditIcon>
-                        <use/>
-                        </EditIcon></EditBtn></SupliersCell>
+                    <SupliersCell type={supplier.status}  ><span>{supplier.status}</span></SupliersCell>
+                     <SupliersCell>
+                        <EditBtn type="button" onClick={handlModalOpen}>
+                        <EditIcon>
+                      <use  href={`${sprite}#icon-edit`}  />
+                        </EditIcon>
+                          Edit
+                        </EditBtn>
+                        </SupliersCell>
                 </SupliersRow>))}
             </SupliersBody>
         </SupliersTable>
@@ -97,6 +120,12 @@ itemsPerPage={itemPerPage}
 currentPage={page}
 onPageChange={setPage}
 />
-    </SupliersWrap>)
+{openModal && (
+        <AddNewSuppliers closeModal={hadleModalClose}  />
+      )}
+    </SupliersWrap>
+    
+
+)
 }
 

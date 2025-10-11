@@ -14,6 +14,7 @@ const color = {
   whiteSmoke: "#F9F9F9 ",
   white: "#FFFFFF",
   backGround: "#rgba(29, 30, 33, 0.1)",
+  backGroundSecond:"rgba(29, 30, 33, 0.4)",
 };
 
 export default color;
