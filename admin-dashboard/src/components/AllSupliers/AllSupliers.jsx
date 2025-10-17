@@ -77,7 +77,7 @@ onPageChange={setPage}
   value={searchTerm} 
     onChange={handleSearchChange}
 />
-           <AddButton>Add a new suppliers</AddButton>
+           <AddButton type="button" onClick={handlModalOpen}>Add a new suppliers</AddButton>
         </FilterWrap>
         <TableWrap>
         <SupliersTable>
@@ -97,13 +97,13 @@ onPageChange={setPage}
                 {visibleSuppliers.map((supplier)=>(  
                     <SupliersRow key={supplier._id}>
                     <SupliersCell>{supplier.name}</SupliersCell>
-                    <SupliersCell>{supplier.adress}</SupliersCell>
+                    <SupliersCell>{supplier.address}</SupliersCell>
                      <SupliersCell>{supplier.company}</SupliersCell>
                     <SupliersCell>{supplier.date}</SupliersCell>
                      <SupliersCell>{supplier.amount}</SupliersCell>
                     <SupliersCell type={supplier.status}  ><span>{supplier.status}</span></SupliersCell>
                      <SupliersCell>
-                        <EditBtn type="button" onClick={handlModalOpen}>
+                        <EditBtn >
                         <EditIcon>
                       <use  href={`${sprite}#icon-edit`}  />
                         </EditIcon>

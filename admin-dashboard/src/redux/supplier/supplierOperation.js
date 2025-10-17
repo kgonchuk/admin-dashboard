@@ -5,13 +5,26 @@ import {  format } from "date-fns";
 
 const API_URL = 'https://admin-dashboard-backend-1-76pt.onrender.com/api';
 
+export const instance = axios.create({
+  baseURL: 'https://admin-dashboard-backend-1-76pt.onrender.com/api',
+});
+
+// Функція для встановлення токена
+export const setAuthToken = (token) => {
+  if (token) {
+    instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+  } else {
+    delete instance.defaults.headers.common.Authorization;
+  }
+};
+
 // Fetch all suppliers
 
 export const fetchSuppliers = createAsyncThunk(
   "suppliers/fetchSuppliers",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`${API_URL}/suppliers`);
+      const res = await instance.get(`/suppliers`); 
       const formatDatedSuppliers = res.data.map((supplier) => ({
         ...supplier,
         date: format(new Date(supplier.date), "MMMM dd, yyyy"),
@@ -28,7 +41,7 @@ export const addSupplier = createAsyncThunk(
   "suppliers/addSupplier",
   async (supplierData, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`${API_URL}/suppliers`, supplierData);
+      const res = await instance.post(`/suppliers`, supplierData);
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || 'Failed to add supplier');

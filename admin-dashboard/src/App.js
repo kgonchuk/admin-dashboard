@@ -2,6 +2,7 @@ import {Navigate, Route, Routes } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser, refreshAccessToken } from "./redux/auth/authOperation";
+import { setAuthHeader } from './redux/auth/authOperation';
 
 
 
@@ -16,25 +17,38 @@ const SharedLayout = lazy(() => import("./components/SharedLayout/SharedLayout")
 
 function App() {
   const dispatch = useDispatch();
-  const auth= useSelector(state => state.auth);
-  const accessToken=auth?.accessToken;
+
 
   useEffect(() => {
     const initAuth = async () => { 
-      if (accessToken) {
-        try {
-          await dispatch(getCurrentUser()).unwrap();
-        
-        } catch (error) {
-          console.error("Error during token verification:", error);
-          await dispatch(refreshAccessToken());
-          await dispatch(getCurrentUser());
-        
-        }
+     const storedToken = localStorage.getItem('accessToken');
+     if (storedToken) {
+          setAuthHeader(storedToken); 
+          
+          // 3. Намагаємося отримати дані користувача для перевірки валідності токена
+          try {
+              // Якщо токен валідний, dispatch(getCurrentUser) успішно оновить Redux
+              await dispatch(getCurrentUser()).unwrap();
+          } catch (error) {
+              // Якщо getCurrentUser (з токеном з localStorage) повертає 401/403:
+              console.warn("Stored token is invalid or expired. Attempting refresh...");
+              // Якщо getCurrentUser не спрацював, спробуємо оновити токен
+              try {
+                  await dispatch(refreshAccessToken()).unwrap();
+                  // Після успішного refresh, токен вже встановлено, дані користувача оновляться
+              } catch (refreshError) {
+                  console.error("Refresh failed. User must log in.", refreshError);
+                  // Очистити localStorage та заголовки, якщо refresh не вдався
+                  // clearAuthHeader(); // Додайте, якщо маєте таку функцію
+              }
+          }
+      } else {
+          // console.log("No token found in storage. Staying logged out.");
+      }
     
-    }}; initAuth();
+    }; initAuth();
    
-  }, [accessToken, dispatch]);
+  }, [dispatch]);
   return (
 
     <div>

@@ -19,6 +19,7 @@ export const logIn = createAsyncThunk(
       console.log("Sending login data:", { email, password }); // ✅ перевіримо payload
        const res = await axios.post( `${API_URL}/login`, { email, password } );
 
+
       return res.data; 
     } catch (err) {
       console.error("Login error:", err.response?.data);
