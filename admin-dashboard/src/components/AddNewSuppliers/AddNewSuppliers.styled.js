@@ -25,6 +25,7 @@ export const ModalContent=styled.div`
     @media screen and (min-width: ${breakpoints.medium})  {
 width: 536px;
   height: 392px;
+    padding: 40px 40px;
   }
   @media screen and (min-width: ${breakpoints.large})  {
   width: 536px;
@@ -64,6 +65,8 @@ export const InputBlock=styled.div`
    @media screen and (min-width: ${breakpoints.medium})  {
   flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: 0;
   }
 `;
 

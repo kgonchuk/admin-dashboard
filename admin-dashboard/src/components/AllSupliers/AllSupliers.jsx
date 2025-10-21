@@ -7,6 +7,7 @@ import { Filter } from "../Filter/Filter";
 import { Paginator } from "../Paginator/Paginator";
 import sprite from '../../assets/sprite-2.svg'
 import { AddNewSuppliers } from "../AddNewSuppliers/AddNewSuppliers";
+import { EditSupplier } from "../EditSupplier/EditSupplier";
 
 
 export const AllSupliers =()=>{
@@ -16,7 +17,8 @@ const loading = useSelector(selectSupplierLoading);
 const error = useSelector(selectSupplierError);
  const [page, setPage] = useState(1);
  const itemPerPage=5;
-
+ const [editingSupplier, setEditingSupplier] = useState(null);
+const [openEditModal, setOpenEditModal]= useState(false)
  const [openModal, setOpenModal] = useState(false);
 
  const [searchTerm, setSearchTerm] = useState('');
@@ -26,8 +28,16 @@ console.log("Redux state:", useSelector((state)=>state))
  const handlModalOpen = () => {
     setOpenModal(true);
   };
+
+    const handleEditOpen=(supplierData)=>{
+        setEditingSupplier(supplierData)
+    setOpenEditModal(true)
+  }
+  
   const hadleModalClose = () => {
     setOpenModal(false);
+     setOpenEditModal(false)
+     setEditingSupplier(null)
   };
   const handleModalCloseEsc = (e) => {
     if (e.code === "Escape") {
@@ -35,6 +45,8 @@ console.log("Redux state:", useSelector((state)=>state))
     }
   };
   window.addEventListener("keydown", handleModalCloseEsc);
+
+
 
 const filteredSuppliers = useMemo(() => {
     if (!searchTerm) {
@@ -103,7 +115,7 @@ onPageChange={setPage}
                      <SupliersCell>{supplier.amount}</SupliersCell>
                     <SupliersCell type={supplier.status}  ><span>{supplier.status}</span></SupliersCell>
                      <SupliersCell>
-                        <EditBtn >
+                        <EditBtn type="button" onClick={() => handleEditOpen(supplier)}>
                         <EditIcon>
                       <use  href={`${sprite}#icon-edit`}  />
                         </EditIcon>
@@ -123,6 +135,12 @@ onPageChange={setPage}
 {openModal && (
         <AddNewSuppliers closeModal={hadleModalClose}  />
       )}
+
+{openEditModal && editingSupplier && (
+    
+
+    <EditSupplier closeModal={hadleModalClose}  supplier={editingSupplier}/>
+)}
     </SupliersWrap>
     
 

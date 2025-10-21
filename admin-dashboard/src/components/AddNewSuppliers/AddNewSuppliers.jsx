@@ -1,21 +1,17 @@
-import { AddBtn, BtnWrap, CancelBtn, CloseBtn, IconClose, Input, InputBlock, ModalContent, ModalOverlay, ModalTitle, SelectWrap, Form,  SelectIcon, SelectHeader, SelectList, SelectItem, DatePickerWrapper } from "./AddNewSuppliers.styled"
+import {CloseBtn, IconClose, Input, InputBlock, ModalContent, ModalOverlay, ModalTitle, SelectWrap, Form,  SelectIcon, SelectHeader, SelectList, SelectItem, DatePickerWrapper } from "./AddNewSuppliers.styled"
 import sprite from '../../assets/sprite-2.svg'
 import { Field, Formik} from "formik";
 import * as Yup from "yup";
 import { useRef, useState } from "react";
-import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch } from "react-redux";
 import { addSupplier, fetchSuppliers } from "../../redux/supplier/supplierOperation";
+import ButtonsModal from "../Modal/ModalBtns";
+import { DatePickerModal } from "../Modal/DatePicker";
+import { SelectOption } from "../Modal/SelectOption";
 
 const statusOption=["Active", "Deactive"]
 
-console.log({
-  AddBtn, BtnWrap, CancelBtn, CloseBtn, IconClose, Input, InputBlock, 
-  ModalContent, ModalOverlay, ModalTitle, SelectWrap, Form, SelectIcon, 
-  SelectHeader, SelectList, SelectItem, DatePickerWrapper
-});
 
 const initialValues = {
   name: '',
@@ -43,14 +39,15 @@ const validationSchema = Yup.object({
   status: Yup.string().oneOf(statusOption).required("Status is required"),
 });
 
-
+const SupplierStatuses = [ 
+  { value: 'Active', label: 'Active' },
+  { value: 'Deactive', label: 'Deactive' },
+];
 
 export const AddNewSuppliers=({closeModal})=>{
     const dispatch=useDispatch();
     const[selectOpen, setSelectOpen]=useState(false);
-     const [selected, setSelected] = useState("Active");
-     const[selectedDate, setSelectedDate]=useState(false);
-     const datePickerRef = useRef(null);
+    const datePickerRef = useRef(null);
 
      const overlayClick = (e) => {
     if (e.currentTarget === e.target) {
@@ -111,7 +108,7 @@ const handleSelectClick=()=>{
           validationSchema={validationSchema}
           onSubmit={onSubmit}
                >
-            {({ values, setFieldValue, handleSubmit, isSubmitting, errors, touched, dirty, setFieldTouched, validateForm, }) => (       
+            {({ values, setFieldValue, handleSubmit, isSubmitting, errors, touched, onChange, setFieldTouched, validateForm, }) => (       
         <Form>
           <InputBlock>
             <Field placeholder="Suppliers Info" as={Input} 
@@ -123,28 +120,21 @@ const handleSelectClick=()=>{
              <Field placeholder="Company" as={Input} 
                   name="company" />
                   {errors.company && touched.company ? <div style={{color: 'red'}}>{errors.company}</div> : null}
-    <DatePickerWrapper>
-            <DatePicker
-             selected={values.date} 
-  onChange={(date) => setFieldValue('date', date)} 
-  placeholderText="Delivery Date"
-  dateFormat="MMMM dd, yyyy"
-  className="date-picker-input"
-  ref={datePickerRef}
-  shouldCloseOnSelect={true}
-   name="date"
-   onBlur={() => setFieldTouched('date', true)}
-            />
-            <svg
-              onClick={handleCalendarIconClick} width={16} height={16}>
-                <use href={`${sprite}#icon-calendar`} />
-            </svg>
-            {errors.date && touched.date ? <div style={{color: 'red'}}>{errors.date}</div> : null}
-          </DatePickerWrapper>
+
+                       <DatePickerModal 
+                       selected={values.date}
+                      onChange={(date) => setFieldValue('date', date)}
+                       placeholder="Delivery date"
+                        dateFormat="MMMM dd, yyyy"
+                   isCorrect={!errors.date}
+                      hasError={errors.date}
+                      ref={datePickerRef}
+                      onIconClick={handleCalendarIconClick}
+                       />
              <Field placeholder="Ammount" as={Input} 
                   name="amount"  type="number" />
                  {errors.amount && touched.amount ? <div style={{color: 'red'}}>{errors.amount}</div> : null}
-         <SelectWrap>
+         {/* <SelectWrap>
                 <SelectHeader onClick={handleSelectClick}>
                  {values.status}
                   <SelectIcon
@@ -171,18 +161,18 @@ const handleSelectClick=()=>{
                     ))}
                   </SelectList>
                 )}
-        </SelectWrap>
-        <BtnWrap>
-            <AddBtn  type="button"
-    onClick={handleSubmit} 
-    disabled={isSubmitting} >Add</AddBtn>
-            <CancelBtn 
-        type="button" 
-    onClick={closeModal}
-    >
-       Close
-    </CancelBtn>
-      </BtnWrap>
+        </SelectWrap> */}
+
+        <Field 
+    name="status"
+    options={SupplierStatuses} 
+    placeholder="Status"
+    menuHeight={76}
+    isCorrect={!errors.status}
+    hasError={errors.status}
+    component={SelectOption} 
+/>
+         <ButtonsModal title="Add" cancelAction={closeModal} />
           </InputBlock>
         </Form>
         )}
