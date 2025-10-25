@@ -28,6 +28,15 @@ margin-top:16px;
 }
 
 `;
+export const AddBtnIcon=styled.svg`
+width:42px;
+height:42px;
+border-radius:100%;
+background-color:${color.greenPrimary};
+fill:#fff;
+
+
+`;
 
 export const SupliersCap=styled.caption`
  padding: 14px;

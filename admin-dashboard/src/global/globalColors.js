@@ -7,7 +7,7 @@ const color = {
   redPrimary: "#E85050",  
   greenLight: "#59B17A 10%",
   greenBorder:"rgba(89, 177, 122, 0.5)",
-  redLight: "#E85050 10%",
+  redLight: "rgba(232, 80, 80, 0.5)",
   greenMint: "#E7F1ED",
   greyLight: "#DCDDDF",
   blueLight: "#F7F8FA",

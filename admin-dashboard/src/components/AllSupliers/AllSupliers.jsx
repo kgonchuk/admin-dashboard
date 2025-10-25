@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import {selectSupplierError, selectSupplierLoading, selectSuppliers } from "../../redux/supplier/supplierSelector";
-import { AddButton, EditBtn, EditIcon, FilterWrap, SupliersBody, SupliersCap, SupliersCell, SupliersHead, SupliersleHeader, SupliersRow, SupliersTable, SupliersWrap, TableWrap } from "./AllSupliers.style"
+import { AddBtnIcon, AddButton, EditBtn, EditIcon, FilterWrap, SupliersBody, SupliersCap, SupliersCell, SupliersHead, SupliersleHeader, SupliersRow, SupliersTable, SupliersWrap, TableWrap } from "./AllSupliers.style"
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSuppliers } from "../../redux/supplier/supplierOperation";
 import { Filter } from "../Filter/Filter";
@@ -8,22 +7,19 @@ import { Paginator } from "../Paginator/Paginator";
 import sprite from '../../assets/sprite-2.svg'
 import { AddNewSuppliers } from "../AddNewSuppliers/AddNewSuppliers";
 import { EditSupplier } from "../EditSupplier/EditSupplier";
+import { selectSuppliers } from "../../redux/supplier/supplierSelector";
+import { AddBtnPlus } from "../common/AddBtnPlus/AddBtnPlus";
 
 
 export const AllSupliers =()=>{
 const dispatch=useDispatch();
 const suppliers = useSelector(selectSuppliers);
-const loading = useSelector(selectSupplierLoading);
-const error = useSelector(selectSupplierError);
  const [page, setPage] = useState(1);
  const itemPerPage=5;
  const [editingSupplier, setEditingSupplier] = useState(null);
 const [openEditModal, setOpenEditModal]= useState(false)
  const [openModal, setOpenModal] = useState(false);
-
  const [searchTerm, setSearchTerm] = useState('');
-console.log("Redux state:", useSelector((state)=>state))
-
 
  const handlModalOpen = () => {
     setOpenModal(true);
@@ -54,7 +50,6 @@ const filteredSuppliers = useMemo(() => {
     }
     return suppliers.filter(supplier =>
         supplier.name.toLowerCase().includes(searchTerm) 
-        // Або додайте інші поля: || supplier.company.toLowerCase().includes(searchTerm)
     );
 }, [searchTerm, suppliers]); // Залежність: оновлює
 
@@ -89,7 +84,7 @@ onPageChange={setPage}
   value={searchTerm} 
     onChange={handleSearchChange}
 />
-           <AddButton type="button" onClick={handlModalOpen}>Add a new suppliers</AddButton>
+<AddBtnPlus onClick={handlModalOpen}>Add a new suppliers</AddBtnPlus>
         </FilterWrap>
         <TableWrap>
         <SupliersTable>

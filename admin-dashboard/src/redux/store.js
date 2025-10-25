@@ -10,6 +10,7 @@ import {
 } from "redux-persist";
 import { authReducer } from "./auth/authSlice";
 import { suplierReducer, supplierReducer } from "./supplier/supplierSlice";
+import { productReducer } from "./product/productSlice";
 
 
 
@@ -18,7 +19,8 @@ export const store = configureStore({
   
   reducer:{
     auth: authReducer,
-    suppliers: supplierReducer
+    suppliers: supplierReducer,
+    products: productReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
