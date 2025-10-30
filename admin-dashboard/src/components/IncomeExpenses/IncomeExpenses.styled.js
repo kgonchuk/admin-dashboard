@@ -109,31 +109,33 @@ padding:14px 28px 14px 0;
     width:80px;
     text-align:center;
     border-radius: 40px;
-    background-color: ${({ type }) => {
+     background-color: ${({ type }) => {
       switch (type) {
-        case "Expense":
-          return `${color.redLight}`;
-        case "Error":
-          return `${color.grey}`;
         case "Income":
-          return `${color.greenLight}`;
+          return "rgba(89, 177, 122, 0.1)";
+        case "Expense":
+          return "rgba(232, 80, 80, 0.1)";
+          case "Error":
+          return "rgba(128, 89, 228, 0.1)";
+         
         default:
           return "rgba(0, 0, 0, 0.05)";
       }
     }};
-  
-  color: ${({ type }) => {
-    switch (type) {
-      case "Expense":
-        return "var(--cancel-color)";
-      case "Error":
-        return "var(--main-text-color)";
-      case "Income":
-        return "var(--main-color)";
-      default:
-        return "inherit";
-    }
-  }};
+
+    color: ${({ type }) => {
+      switch (type) {
+        case "Income":
+          return "rgba(89, 177, 122, 1)";
+        case "Expense":
+          return "rgba(232, 80, 80, 1)";
+          case "Error":
+          return "rgba(128, 89, 228, 1)";
+          
+        default:
+          return "inherit";
+      }
+    }};
 
  
 `;

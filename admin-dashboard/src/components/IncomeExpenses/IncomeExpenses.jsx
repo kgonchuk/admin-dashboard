@@ -1,6 +1,9 @@
-import { Caption, IncomeCap, IncomeHead, IncomeTable, IncomeTd, IncomeTr, IncomeWrap, StyledTable, StyledTd, StyledTh, StyledThead, StyledTr, StyleThead, Table, TableBody, TableCellAmount, TableCellName, TableCellType, TableContainer, TableHead, TableHeader, TableRow, TableWrapper } from "./IncomeExpenses.styled"
+import { selectIncomeExpenses } from "../../redux/dashboard/dashboardSelector";
+import { Caption, Table, TableBody, TableCellAmount, TableCellName, TableCellType, TableContainer, TableHead, TableHeader, TableRow, TableWrapper } from "./IncomeExpenses.styled"
+import { useSelector } from "react-redux";
 
 export const IncomeExpenses=()=>{
+   const incomeExpenses = useSelector(selectIncomeExpenses);
     return(
 
     <TableContainer>
@@ -14,49 +17,18 @@ export const IncomeExpenses=()=>{
           </TableRow>
         </TableHead>
         <TableBody>
-        
-            
-              <TableRow >
-                <TableCellType >
-                  <span>Expense</span>
+        {incomeExpenses.map(item=>(
+              <TableRow key={item._id || item.id}>
+                <TableCellType type={item.type} >
+                  <span>{item.type}</span>
                 </TableCellType>
-                <TableCellName>Qonto billing</TableCellName>
-                <TableCellAmount >
-                  -49.88
+                <TableCellName>{item.name}</TableCellName>
+                <TableCellAmount type={item.type}>
+                  {item.type === 'Income' ? '+' : '-'}
+                      {item.amount}
                 </TableCellAmount>
               </TableRow>
-
-               <TableRow >
-                <TableCellType >
-                  <span>Income</span>
-                </TableCellType>
-                <TableCellName>Cruip.com Market Ltd 70 Wilson St London</TableCellName>
-                <TableCellAmount >
-                 +249.88
-                </TableCellAmount>
-              </TableRow>
-
-              <TableRow >
-                <TableCellType >
-                  <span>Error</span>
-                </TableCellType>
-                <TableCellName>App.com Market Ltd 70 Wilson St London</TableCellName>
-                <TableCellAmount >
-                 +99.99
-                </TableCellAmount>
-              </TableRow>
-
-               <TableRow >
-                <TableCellType >
-                  <span>Error</span>
-                </TableCellType>
-                <TableCellName>App.com Market Ltd 70 Wilson St London</TableCellName>
-                <TableCellAmount >
-                 +99.99
-                </TableCellAmount>
-              </TableRow>
-     
-        
+        ))} 
         </TableBody>
           </Table>
     </TableContainer>

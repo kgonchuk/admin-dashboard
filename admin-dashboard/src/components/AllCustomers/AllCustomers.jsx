@@ -12,7 +12,7 @@ const [searchTerm, setSearchTerm] = useState('');
  const [page, setPage] = useState(1);
  const itemPerPage=5;
 
-const filteredSuppliers = useMemo(() => {
+const filteredCustomers = useMemo(() => {
      if (!searchTerm) {
          return customers;
      }
@@ -22,13 +22,13 @@ const filteredSuppliers = useMemo(() => {
      );
  }, [searchTerm, customers]); 
 
- const totalItems = filteredSuppliers.length; 
+ const totalItems = filteredCustomers.length; 
  
  
  const startIndex = (page - 1) * itemPerPage;
  const endIndex = startIndex + itemPerPage;
  
- const visibleSuppliers = filteredSuppliers.slice(startIndex, endIndex)
+ const visibleCustomers = filteredCustomers.slice(startIndex, endIndex)
  
  useEffect(()=>{
      dispatch(fetchCustomers())
@@ -66,13 +66,13 @@ const filteredSuppliers = useMemo(() => {
                         </CustomerRow>
                         </CustomerHeader>
                         <CustomerBody>
-                            {visibleSuppliers.map((order)=>(  
-                                <CustomerRow key={order._id}>
-                                <CustomerCell>{order.name}</CustomerCell>
-                                <CustomerCell>{order.email}</CustomerCell>
-                                 <CustomerCell>{order.address}</CustomerCell>
-                                <CustomerCell>{order.phone}</CustomerCell>
-                                 <CustomerCell>{order.date}</CustomerCell>
+                            {visibleCustomers.map((customer)=>(  
+                                <CustomerRow key={customer._id}>
+                                <CustomerCell>{customer.name}</CustomerCell>
+                                <CustomerCell>{customer.email}</CustomerCell>
+                                 <CustomerCell>{customer.address}</CustomerCell>
+                                <CustomerCell>{customer.phone}</CustomerCell>
+                                 <CustomerCell>{customer.date}</CustomerCell>
 
                               
                             </CustomerRow>))}
