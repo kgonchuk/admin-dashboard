@@ -1,6 +1,8 @@
+import { AllCustomers } from "../../components/AllCustomers/AllCustomers";
+
 const CustomersDataPage = () => {
   return (
-    <div>CustomersDataPage</div>
+   <AllCustomers/>
   )
 }           
 export default CustomersDataPage;

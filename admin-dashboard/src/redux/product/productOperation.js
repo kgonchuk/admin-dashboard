@@ -49,3 +49,26 @@ return res.data
   return rejectWithValue(err.response?.data?.message || 'Failed to fetch products')
 }
 })
+// DELETE PRODUCT
+
+export const deleteProduct=createAsyncThunk(
+  "products/deleteProducts", async(productId, thunkAPI)=>{
+  try{
+await instance.delete(`/products/${productId}`); 
+      return productId;
+  }catch(err){
+console.error("Delete Product Error:", err.response?.data || err.message);
+    return thunkAPI.rejectWithValue(err.response?.data?.message || 'Failed to delete product'); 
+  }
+})
+//  UPDATE PRODUCT
+
+export const updateProduct=createAsyncThunk("products/updateProducts", async({productId, updateData}, thunkAPI)=>{
+try{
+await instance.put(`/products/${productId}`, updateData); 
+}catch(err){
+  console.error("Update Product Error:", err.response?.data || err.message);
+    return thunkAPI.rejectWithValue(err.response?.data?.message || 'Failed to update product'); 
+}
+
+})

@@ -4,9 +4,9 @@ import { breakpoints } from "../../global/breakPoints";
 
 
 export const SupliersWrap= styled.div`
-  margin-top: 20px;
+  margin-top: 40px;
   @media screen and (min-width: ${breakpoints.medium})  {
-margin-bottom:20px;
+margin-bottom:50px;
 }
 @media screen and (min-width: ${breakpoints.large})  {
 }
@@ -116,12 +116,13 @@ width:680px;
   border-spacing: 0;
   border-top: 0;
 
-
+margin-top:20px;
   width: 100%; 
   border-collapse: collapse;
   @media screen and (min-width: ${breakpoints.medium})  {
   padding: 0 20px;
   width: 960px;
+  margin-top:0px;
     }
 
    @media screen and (min-width: ${breakpoints.large})  {

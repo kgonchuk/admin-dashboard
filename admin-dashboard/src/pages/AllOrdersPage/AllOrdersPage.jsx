@@ -1,9 +1,10 @@
+import { AllOredrs } from "../../components/AllOrders/AllOrders";
 
 
 
 const AllOrdersPage = () => {
   return (
-    <div>    AllOrdersPage</div>
+  <AllOredrs/>
   
 
  

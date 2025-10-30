@@ -1,13 +1,15 @@
 
-import { AddButton,  BtnWrap,  DeleteBtn,  DeleteIcon,  EditBtn,  EditIcon,  FilterWrap, ProductsBody, ProductsCap, ProductsCell, ProductsHead, ProductsHeadName, ProductsleHeader, ProductsRow, ProductsTable, ProductsWrap, TableWrap } from "./AllProducts.styled";
+import {BtnWrap,  DeleteBtn,  DeleteIcon,  EditBtn,  EditIcon,  FilterWrap, ProductsBody, ProductsCap, ProductsCell, ProductsHead, ProductsHeadName, ProductsleHeader, ProductsRow, ProductsTable, ProductsWrap, TableWrap } from "./AllProducts.styled";
 import { Filter } from "../Filter/Filter";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import { selectProducts } from "../../redux/product/productsSelector";
-import { fetchProducts } from "../../redux/product/productOperation";
+import { deleteProduct, fetchProducts } from "../../redux/product/productOperation";
 import { Paginator } from "../Paginator/Paginator";
 import sprite from '../../assets/sprite-2.svg'
 import { AddBtnPlus } from "../common/AddBtnPlus/AddBtnPlus";
+import { AddNewProduct } from "../AddNewProduct/AddNewProduct";
+import { EditProduct } from "../EditProduct/EditProduct";
 
 export const AllProducts = () => {
   const dispatch=useDispatch();
@@ -15,6 +17,21 @@ const products = useSelector(selectProducts);
  const [page, setPage] = useState(1);
  const itemPerPage=5;
  const [searchTerm, setSearchTerm] = useState('');
+ const [openModal, setOpenModal]=useState(false)
+ const [openEditModal, setOpenEditModal]= useState(false)
+ const [editingProduct, setEditingProduct] = useState(null);
+
+ const hadleModalClose = () => {
+  setOpenModal(false);
+    setOpenEditModal(false);
+    setEditingProduct(null);
+  };
+  const handleModalCloseEsc = (e) => {
+    if (e.code === "Escape") {
+      hadleModalClose();
+    }
+  };
+  window.addEventListener("keydown", handleModalCloseEsc);
 
 
  const filteredSuppliers = useMemo(() => {
@@ -45,7 +62,13 @@ const handleSearchChange = (event) => {
         setPage(1); 
     };
 
-
+const handleModalAddClick=()=>{
+ setOpenModal(true);
+}
+const handleModalEditClick=(productData)=>{
+  setEditingProduct(productData);
+ setOpenEditModal(true);
+}
 
   return ( 
   
@@ -60,7 +83,7 @@ onPageChange={setPage}
   value={searchTerm} 
     onChange={handleSearchChange}
 />
-<AddBtnPlus >Add a new product</AddBtnPlus>
+<AddBtnPlus onClick={handleModalAddClick}>Add a new product</AddBtnPlus>
         </FilterWrap>
         <TableWrap>
         <ProductsTable>
@@ -86,8 +109,8 @@ onPageChange={setPage}
                      <ProductsCell>{product.price}</ProductsCell>
                     <ProductsCell>
                       <BtnWrap>
-                      <EditBtn><EditIcon><use  href={`${sprite}#icon-edit`}/></EditIcon></EditBtn>
-                     <DeleteBtn><DeleteIcon><use  href={`${sprite}#icon-trash`}/></DeleteIcon></DeleteBtn>
+                      <EditBtn onClick={() => handleModalEditClick(product)}><EditIcon><use  href={`${sprite}#icon-edit`}/></EditIcon></EditBtn>
+                     <DeleteBtn onClick={()=>dispatch(deleteProduct(product._id))}><DeleteIcon><use  href={`${sprite}#icon-trash`}/></DeleteIcon></DeleteBtn>
                      </BtnWrap>
                     </ProductsCell>
                   
@@ -101,6 +124,14 @@ itemsPerPage={itemPerPage}
 currentPage={page}
 onPageChange={setPage}
 />
-
+{openModal && 
+<AddNewProduct closeModal={hadleModalClose} />
+}
+{openEditModal && editingProduct && ( 
+    <EditProduct 
+        closeModal={hadleModalClose} 
+        product={editingProduct}
+    />
+)}
     </ProductsWrap>);
 }

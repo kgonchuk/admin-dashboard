@@ -6,7 +6,7 @@ export const FilterContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top:40px;
+  // margin-top:40px;
     @media screen and (min-width: ${breakpoints.medium})  {
       margin-top:0;
       

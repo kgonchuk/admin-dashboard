@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import color from "../../../global/globalColors";
+import { breakpoints } from "../../../global/breakPoints";
 export const ButtonPlus=styled.button`
  align-self: start;
   display: flex;
@@ -13,11 +14,15 @@ export const ButtonPlus=styled.button`
 
   background-color: transparent;
   border: 0;
-
+margin-top:18px;
   &:hover span,
   &:focus span {
     background-color: ${color.greenLight};
   }
+    @media screen and (min-width: ${breakpoints.medium})  {
+        margin-top:0;
+     
+    }
 `;
 export const ButtonWrap=styled.div`
 display: flex;

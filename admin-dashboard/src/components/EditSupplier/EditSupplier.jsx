@@ -34,10 +34,8 @@ const [selectOpen, setSelectOpen]=useState(false)
     if (!dateString || String(dateString).trim() === '') {
         return null;
     }
-    
     // Створюємо об'єкт Date
     const date = new Date(dateString);
-    
     // Перевіряємо, чи об'єкт Date є валідним (не "Invalid Date")
     // Якщо валідний, повертаємо Date object, інакше null
     return isNaN(date.getTime()) ? null : date;
@@ -88,9 +86,7 @@ const onSubmit = async (values, { setSubmitting }) => {
     }
   };
 
-  const handleSelectClick = () => {
-    setSelectOpen((prev) => !prev);
-}
+
 
     return(
         <ModalOverlay onClick={overlayClick}>

@@ -1,4 +1,4 @@
-import {CloseBtn, IconClose, Input, InputBlock, ModalContent, ModalOverlay, ModalTitle, SelectWrap, Form,  SelectIcon, SelectHeader, SelectList, SelectItem, DatePickerWrapper } from "./AddNewSuppliers.styled"
+import {CloseBtn, IconClose, Input, InputBlock, ModalContent, ModalOverlay, ModalTitle, Form,} from "./AddNewSuppliers.styled"
 import sprite from '../../assets/sprite-2.svg'
 import { Field, Formik} from "formik";
 import * as Yup from "yup";
@@ -46,7 +46,6 @@ const SupplierStatuses = [
 
 export const AddNewSuppliers=({closeModal})=>{
     const dispatch=useDispatch();
-    const[selectOpen, setSelectOpen]=useState(false);
     const datePickerRef = useRef(null);
 
      const overlayClick = (e) => {
@@ -54,10 +53,6 @@ export const AddNewSuppliers=({closeModal})=>{
       closeModal();
     }
   };
-
-
-const handleSelectClick=()=>{
-    setSelectOpen((prev)=>!prev);}
 
  const handleCalendarIconClick = () => {
   if (datePickerRef.current && datePickerRef.current.input) {
@@ -134,34 +129,7 @@ const handleSelectClick=()=>{
              <Field placeholder="Ammount" as={Input} 
                   name="amount"  type="number" />
                  {errors.amount && touched.amount ? <div style={{color: 'red'}}>{errors.amount}</div> : null}
-         {/* <SelectWrap>
-                <SelectHeader onClick={handleSelectClick}>
-                 {values.status}
-                  <SelectIcon
-                    $open={selectOpen}
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <use href={`${sprite}#icon-Vector`} />
-                  </SelectIcon>
-                </SelectHeader>
-
-                {selectOpen && (
-                  <SelectList>
-                    {statusOption.map((item) => (
-                      <SelectItem
-                        key={item}
-                       onClick={() => {
-                            setFieldValue('status', item);
-                            setSelectOpen(false);
-                          }}
-                      >
-                        {item}
-                      </SelectItem>
-                    ))}
-                  </SelectList>
-                )}
-        </SelectWrap> */}
+ 
 
         <Field 
     name="status"
