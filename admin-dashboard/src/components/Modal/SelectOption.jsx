@@ -16,19 +16,15 @@ const selectedOption = options
     {...field} // Передаємо name, value, onBlur
             placeholder={placeholder}  
             options={options}
-            value={selectedOption} // ✅ Використовуємо знайдений об'єкт
-            onChange={option => form.setFieldValue(field.name, option ? option.value : '')} // ✅ Оновлення Formik
+            value={selectedOption} // Використовуємо знайдений об'єкт
+            onChange={option => form.setFieldValue(field.name, option ? option.value : '')} // Оновлення Formik
             onBlur={() => form.setFieldTouched(field.name, true)}
             className='select-option'
             styles={{
         ...selectStyles,
         control: (baseStyles, state) => ({
           ...selectStyles.control(baseStyles, state),
-        //   border: `1px solid ${getBorderColorByValidationResult(
-        //     theme,
-        //     isCorrect,
-        //     hasError
-        //   )}`
+        
         }),
         menu: (baseStyles, state) => ({
           ...selectStyles.menu(baseStyles, state),

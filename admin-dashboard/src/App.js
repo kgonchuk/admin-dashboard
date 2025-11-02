@@ -3,6 +3,7 @@ import { lazy, Suspense, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser, refreshAccessToken } from "./redux/auth/authOperation";
 import { setAuthHeader } from './redux/auth/authOperation';
+import { ToastContainer } from 'react-toastify';
 
 
 
@@ -52,6 +53,7 @@ function App() {
   return (
 
     <div>
+      <ToastContainer position="top-right" autoClose={5000} />
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           {/* Login окремо */}

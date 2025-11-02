@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { AddBtnIcon, AddButton, EditBtn, EditIcon, FilterWrap, SupliersBody, SupliersCap, SupliersCell, SupliersHead, SupliersleHeader, SupliersRow, SupliersTable, SupliersWrap, TableWrap } from "./AllSupliers.style"
+import { EditBtn, EditIcon, FilterWrap, SupliersBody, SupliersCap, SupliersCell, SupliersHead, SupliersleHeader, SupliersRow, SupliersTable, SupliersWrap, TableWrap } from "./AllSupliers.style"
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSuppliers } from "../../redux/supplier/supplierOperation";
 import { Filter } from "../Filter/Filter";

@@ -54,8 +54,16 @@ export const updateSupplier = createAsyncThunk(
   "suppliers/updateSupplier",
   async ({ id, updatedData }, { rejectWithValue }) => {
     try {
-      const res = await axios.put(`${API_URL}/suppliers/${id}`, updatedData);
-      return res.data;
+      // ВИПРАВЛЕНО: Використовуємо конфігурований instance замість axios
+      const res = await instance.put(`/suppliers/${id}`, updatedData);
+      
+      // Додаємо форматування дати перед поверненням для коректного відображення в AllSupliers
+      const formattedData = {
+          ...res.data,
+          date: format(new Date(res.data.date), "MMMM dd, yyyy"),
+      };
+      
+      return formattedData;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || 'Failed to update supplier');
     }

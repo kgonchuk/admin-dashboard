@@ -1,5 +1,6 @@
 import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 
 export const instance = axios.create({
@@ -30,7 +31,7 @@ if (!res.data || res.data.length === 0) {
             
             return res.data;
     }catch(err){
-      console.error("Fetch Products Error:", err.response?.data || err.message);
+
             return thunkAPI.rejectWithValue(err.response?.data?.message || 'Failed to fetch products');
     }
 }
@@ -45,7 +46,6 @@ try{
 const res=await instance.post('/products', productData)
 return res.data
 }catch(err){
-  console.log(err)
   return rejectWithValue(err.response?.data?.message || 'Failed to fetch products')
 }
 })
@@ -57,18 +57,20 @@ export const deleteProduct=createAsyncThunk(
 await instance.delete(`/products/${productId}`); 
       return productId;
   }catch(err){
-console.error("Delete Product Error:", err.response?.data || err.message);
     return thunkAPI.rejectWithValue(err.response?.data?.message || 'Failed to delete product'); 
   }
 })
 //  UPDATE PRODUCT
 
-export const updateProduct=createAsyncThunk("products/updateProducts", async({productId, updateData}, thunkAPI)=>{
-try{
-await instance.put(`/products/${productId}`, updateData); 
-}catch(err){
-  console.error("Update Product Error:", err.response?.data || err.message);
-    return thunkAPI.rejectWithValue(err.response?.data?.message || 'Failed to update product'); 
-}
-
-})
+export const updateProduct = createAsyncThunk(
+    "products/updateProducts",
+    async ({ productId, updateData }, thunkAPI) => {
+        try {
+            const res = await instance.put(`/products/${productId}`, updateData);
+            return res.data;
+        } catch (err) {
+            // CRITICAL CHANGE: Removed toast.error - UI logic is separated
+            return thunkAPI.rejectWithValue(err.response?.data?.message || 'Failed to update product');
+        }
+    }
+);

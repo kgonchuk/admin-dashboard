@@ -52,7 +52,7 @@ const supplierSlice= createSlice({
             })
             .addCase(updateSupplier.fulfilled, (state, action) => {
                 state.loading = false;
-                const index = state.suppliers.findIndex(supplier => supplier.id === action.payload.id);
+               const index = state.suppliers.findIndex(supplier => supplier._id === action.payload._id);
                 if (index !== -1) {
                     state.suppliers[index] = action.payload;
                 }

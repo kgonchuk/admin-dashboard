@@ -1,4 +1,4 @@
-import { StatisticContainer, StatisticIcon, StatisticImg, StatisticImgWrap, StatisticItem, StatisticList, StatisticNumber, StatisticText, StstisticList } from "./Statistic.styled"
+import { StatisticContainer, StatisticIcon,  StatisticImgWrap, StatisticItem, StatisticList, StatisticNumber, StatisticText, StstisticList } from "./Statistic.styled"
 import sprite from "../../assets/sprite-2.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllCustomers, selectAllProducts, selectAllSuppliers, selectDashboardLoading } from "../../redux/dashboard/dashboardSelector";

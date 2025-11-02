@@ -164,8 +164,8 @@ export const SidebarIcon=styled.svg`
    left: 50%;
    transform: translateX(-50%);
    display: block;
-   @media screen and (min-width: ${breakpoints.large}) ) {
-    display: none;
+    @media screen and (min-width: ${breakpoints.large}) {
+   display: none;
   }
  `;
  export const SidebarWrapper=styled.div`

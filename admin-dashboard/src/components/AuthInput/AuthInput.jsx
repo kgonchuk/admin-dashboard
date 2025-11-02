@@ -5,7 +5,7 @@ import { InputWrapper, InputLabel, InputField, ErrorText } from "./AuthInput.sty
 const AuthInput = ({ label, name, type = "text", placeholder, icon, ...rest }) => {
   return (
     <InputWrapper>
-      {label && <InputLabel htmlFor={name}>{label}</InputLabel>}
+      {label && <InputLabel htmlFor={name}></InputLabel>}
       <div style={{ position: "relative" }}>
         <Field
           as={InputField}

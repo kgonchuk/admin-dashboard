@@ -19,10 +19,10 @@ export const logIn = createAsyncThunk(
       console.log("Sending login data:", { email, password }); // ✅ перевіримо payload
        const res = await axios.post( `${API_URL}/login`, { email, password } );
 
-
+ toast.success(`Welcome ${res.data.name}`);
       return res.data; 
     } catch (err) {
-      console.error("Login error:", err.response?.data);
+      toast.error('ERROR, Invalid data');
       return rejectWithValue(err.response?.data?.message || 'Login failed');
     }
   }

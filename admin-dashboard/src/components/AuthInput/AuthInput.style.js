@@ -14,8 +14,8 @@ export const InputLabel = styled.label`
 
 export const InputField = styled.input`
   padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  border: 1px solid rgba(29, 30, 33, 0.1);
+  border-radius: 60px;
   font-size: 15px;
   &:focus {
     border-color: #2b65ff;

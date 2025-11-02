@@ -66,7 +66,7 @@ export const AddNewProduct=({closeModal})=>{
           validationSchema={validationSchema}
           onSubmit={onSubmit}
                >
-            {({ values, setFieldValue, handleSubmit, isSubmitting, errors, touched, onChange, setFieldTouched, validateForm, }) => (       
+            {({  errors, touched }) => (       
         <Form>
           <InputBlock>
             <Field placeholder="Suppliers Info" as={Input} 

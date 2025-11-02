@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { SelectOption } from "../Modal/SelectOption";
 import ButtonsModal from "../Modal/ModalBtns";
 import { useDispatch } from "react-redux";
-import {fetchProducts, updateProduct } from "../../redux/product/productOperation";
+import {updateProduct } from "../../redux/product/productOperation";
 
 const categoryStatus=['Medicine', 'Head', 'Hand', 'Dental Care', 'Skin Care', 'Eye Care', 'Vitamins & Supplements', 'Orthopedic Products', 'Baby Care']
 
@@ -16,16 +16,19 @@ const categoryStatusOptions = categoryStatus.map(item => ({
 
 const validationSchema = Yup.object({
   name: Yup.string(),
-  category: Yup.string().oneOf(categoryStatus).required("Status is required"),
+  category: Yup.string().oneOf(categoryStatus, "Невірне значення категорії").required("Категорія є обов'язковою"),
   stock: Yup.number()
-    .positive("Stock must be positive"), 
+    .typeError("Stock має бути числом") 
+    .positive("Залишок має бути додатнім"), 
   suppliers: Yup.string()
-    .required("Suppliers is required"),
+    .required("Постачальник є обов'язковим"),
   price: Yup.number()
-    .positive("Price must be positive")
-    .required("Price is required"),
+    .typeError("Ціна має бути числом") // Додано тип помилки для чисел
+    .positive("Ціна має бути додатньою")
+    .required("Ціна є обов'язковою"),
   
 });
+
 
 
 export const EditProduct=({closeModal, product})=>{
@@ -50,14 +53,25 @@ const initialValues = {
     }
   };
 const onSubmit = async (values, { setSubmitting }) => {
-    const payload = {
-        id: product._id, // ✅ Використовуємо ID переданого продукту
-        updatedData: values
+    const updatedValues = {
+        ...values,
+        stock: Number(values.stock),
+        price: Number(values.price),
     };
-   await dispatch(updateProduct(payload)); 
-    await dispatch(fetchProducts());
 
-    closeModal();
+    const payload = {
+        productId: product._id, 
+        updateData: updatedValues
+    };
+   
+    try {
+        await dispatch(updateProduct(payload)).unwrap(); 
+        closeModal();
+    } catch (error) {
+        console.error("Failed to update product:", error);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
     return(

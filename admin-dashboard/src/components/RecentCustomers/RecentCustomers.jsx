@@ -1,5 +1,5 @@
 import { selectRecentCustomers } from "../../redux/dashboard/dashboardSelector";
-import { CustomerImgBlock, CustomImg,  RecentTable, RecentWrap,  TableBody, TableCap, TableCount, TableHead, TableHeader, TableHeadName, TableRow, TableTd, TableTdEmail,} from "./RecentCustomers.styled"
+import { CustomerImgBlock, RecentTable, RecentWrap,  TableBody, TableCap, TableCount, TableHead, TableHeader, TableHeadName, TableRow, TableTd, TableTdEmail,} from "./RecentCustomers.styled"
 import { useSelector } from "react-redux";
 
 

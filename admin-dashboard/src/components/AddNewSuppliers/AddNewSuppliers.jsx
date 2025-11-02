@@ -9,6 +9,7 @@ import { addSupplier, fetchSuppliers } from "../../redux/supplier/supplierOperat
 import ButtonsModal from "../Modal/ModalBtns";
 import { DatePickerModal } from "../Modal/DatePicker";
 import { SelectOption } from "../Modal/SelectOption";
+import toast from "react-hot-toast";
 
 const statusOption=["Active", "Deactive"]
 
@@ -77,11 +78,13 @@ export const AddNewSuppliers=({closeModal})=>{
         const errorMessage = resultAction.payload || "Не вдалося додати постачальника через помилку сервера.";
         console.error("Помилка відправки:", errorMessage);
 
-        // Тут можна додати виведення повідомлення користувачу (наприклад, toast)
-        return; // Зупинити виконання функції
+       toast.error(`Помилка додавання: ${errorMessage}`);
+        return;
       }
-      // 2. Оновлення списку постачальників (як у вашому початковому коді)
+      // Оновлення списку постачальників
+     
       await dispatch(fetchSuppliers())
+      toast.success("Supplier added successfully!");
       closeModal();
     } catch (error) {
       console.error("Failed to add supplier:", error);

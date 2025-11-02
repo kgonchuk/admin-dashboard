@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { format } from "date-fns";
+import toast from "react-hot-toast";
 
 export const instance = axios.create({
   baseURL: 'https://admin-dashboard-backend-1-76pt.onrender.com/api',
@@ -23,7 +24,9 @@ if (!persistedToken) { // ✅ Перевірка на null/undefined
       }));
       return formatDatedSuppliers;
     }catch(err){
-      console.error("Fetch Customers Error:", err.response?.data || err.message);
+     toast.error("ERROR, Connection error");
+     
+     
             return thunkAPI.rejectWithValue(err.response?.data?.message || 'Failed to fetch customers');
     }
 }
