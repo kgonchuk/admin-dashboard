@@ -20,7 +20,7 @@ if (!persistedToken) { // ✅ Перевірка на null/undefined
 instance.defaults.headers.common.Authorization = `Bearer ${persistedToken}`;
 const res = await instance.get(`/orders`);
 if (!res.data || res.data.length === 0) {
-                 // Тут можна обробити випадок, коли API повертає []
+               console.log("No orders found from API response.");
             }
             
             return res.data;

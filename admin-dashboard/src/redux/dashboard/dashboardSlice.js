@@ -22,8 +22,6 @@ const dashboardSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchDashboard.fulfilled, (state, action) => {
-     // ВИПРАВЛЕНО: Залишено лише захищену логіку для запобігання TypeError.
-     
      // Визначаємо, де знаходяться актуальні дані: 
      const dataRoot = action.payload?.data || action.payload;
 

@@ -1,6 +1,6 @@
-import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
+import { createAsyncThunk, } from "@reduxjs/toolkit";
 import axios from "axios";
-import toast from "react-hot-toast";
+
 
 
 export const instance = axios.create({
@@ -8,7 +8,7 @@ export const instance = axios.create({
 });
 
 export const setAuthHeader = token => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`; // ✅ Це обов'язково
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`; 
 };
 
 // GET ALL PRODUCTS
@@ -26,7 +26,7 @@ if (!persistedToken) { // ✅ Перевірка на null/undefined
 instance.defaults.headers.common.Authorization = `Bearer ${persistedToken}`;
 const res = await instance.get(`/products`);
 if (!res.data || res.data.length === 0) {
-                 // Тут можна обробити випадок, коли API повертає []
+    console.log("No products found from API response.");
             }
             
             return res.data;
@@ -69,7 +69,6 @@ export const updateProduct = createAsyncThunk(
             const res = await instance.put(`/products/${productId}`, updateData);
             return res.data;
         } catch (err) {
-            // CRITICAL CHANGE: Removed toast.error - UI logic is separated
             return thunkAPI.rejectWithValue(err.response?.data?.message || 'Failed to update product');
         }
     }

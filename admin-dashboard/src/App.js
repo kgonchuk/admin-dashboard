@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser, refreshAccessToken } from "./redux/auth/authOperation";
 import { setAuthHeader } from './redux/auth/authOperation';
 import { ToastContainer } from 'react-toastify';
+import { PrivateRoute } from "./components/PrivateRoute";
 
 
 
@@ -25,26 +26,18 @@ function App() {
      const storedToken = localStorage.getItem('accessToken');
      if (storedToken) {
           setAuthHeader(storedToken); 
-          
-          // 3. Намагаємося отримати дані користувача для перевірки валідності токена
           try {
-              // Якщо токен валідний, dispatch(getCurrentUser) успішно оновить Redux
               await dispatch(getCurrentUser()).unwrap();
           } catch (error) {
-              // Якщо getCurrentUser (з токеном з localStorage) повертає 401/403:
               console.warn("Stored token is invalid or expired. Attempting refresh...");
-              // Якщо getCurrentUser не спрацював, спробуємо оновити токен
               try {
                   await dispatch(refreshAccessToken()).unwrap();
-                  // Після успішного refresh, токен вже встановлено, дані користувача оновляться
               } catch (refreshError) {
                   console.error("Refresh failed. User must log in.", refreshError);
-                  // Очистити localStorage та заголовки, якщо refresh не вдався
-                  // clearAuthHeader(); // Додайте, якщо маєте таку функцію
               }
           }
       } else {
-          // console.log("No token found in storage. Staying logged out.");
+          console.log("No token found in storage. Staying logged out.");
       }
     
     }; initAuth();
@@ -53,7 +46,7 @@ function App() {
   return (
 
     <div>
-      <ToastContainer position="top-right" autoClose={5000} />
+     <ToastContainer position="top-right" autoClose={5000} />
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           {/* Login окремо */}
@@ -61,11 +54,32 @@ function App() {
 
           {/* Усі інші сторінки під SharedLayout */}
           <Route path="/" element={<SharedLayout />}>
-            <Route path="dashboard" element={<DashboardPage />} />
-            <Route path="orders" element={<AllOrdersPage />} />
-            <Route path="products" element={<AllProductsPage />} />
-            <Route path="suppliers" element={<AllSuppliersPage />} />
-            <Route path="customers" element={<CustomersDataPage />} />
+          
+            <Route path="dashboard" element={
+                <PrivateRoute>
+                    <DashboardPage />
+                </PrivateRoute>
+            } />
+            <Route path="orders" element={
+                <PrivateRoute>
+                    <AllOrdersPage />
+                </PrivateRoute>
+            } />
+            <Route path="products" element={
+                <PrivateRoute>
+                    <AllProductsPage />
+                </PrivateRoute>
+            } />
+            <Route path="suppliers" element={
+                <PrivateRoute>
+                    <AllSuppliersPage />
+                </PrivateRoute>
+            } />
+            <Route path="customers" element={
+                <PrivateRoute>
+                    <CustomersDataPage />
+                </PrivateRoute>
+            } />
 
             {/* якщо зайшов на / → редірект на /login */}
             <Route index element={<Navigate to="/login" replace />} />

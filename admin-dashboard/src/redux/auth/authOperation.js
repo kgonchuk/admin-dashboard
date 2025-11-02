@@ -10,13 +10,13 @@ export const clearAuthHeader = () => {
   axios.defaults.headers.common.Authorization = "";
 };
 
-const API_URL = 'https://admin-dashboard-backend-1-76pt.onrender.com/api/user'; // 👈 твій локальний бекенд
+const API_URL = 'https://admin-dashboard-backend-1-76pt.onrender.com/api/user'; 
 
 export const logIn = createAsyncThunk(
   'auth/logIn',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      console.log("Sending login data:", { email, password }); // ✅ перевіримо payload
+      console.log("Sending login data:", { email, password }); 
        const res = await axios.post( `${API_URL}/login`, { email, password } );
 
  toast.success(`Welcome ${res.data.name}`);
@@ -32,7 +32,7 @@ export const logOut = createAsyncThunk(
     "auth/logout", async (_, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth?.accessToken; 
-    // 🛑 Якщо токена немає, ми не можемо надіслати запит на вихід. 
+    //  Якщо токена немає, ми не можемо надіслати запит на вихід. 
     if (!token) {
         clearAuthHeader();
         localStorage.removeItem('accessToken');

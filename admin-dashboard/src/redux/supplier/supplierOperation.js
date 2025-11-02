@@ -2,9 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import {  format } from "date-fns";
 
-
-const API_URL = 'https://admin-dashboard-backend-1-76pt.onrender.com/api';
-
 export const instance = axios.create({
   baseURL: 'https://admin-dashboard-backend-1-76pt.onrender.com/api',
 });
@@ -54,7 +51,6 @@ export const updateSupplier = createAsyncThunk(
   "suppliers/updateSupplier",
   async ({ id, updatedData }, { rejectWithValue }) => {
     try {
-      // ВИПРАВЛЕНО: Використовуємо конфігурований instance замість axios
       const res = await instance.put(`/suppliers/${id}`, updatedData);
       
       // Додаємо форматування дати перед поверненням для коректного відображення в AllSupliers
