@@ -2,7 +2,7 @@
   "name": "admin-dashboard",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://kgonchuk.github.io/admin-dashboard",
+  "homepage": "/admin-dashboard",
   "dependencies": {
     "@reduxjs/toolkit": "^2.9.0",
     "@testing-library/dom": "^10.4.1",
